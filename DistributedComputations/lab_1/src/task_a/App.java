@@ -11,8 +11,8 @@ public class App {
     public static void main(String[] args) {
         setGUI();
 
-        firstThread = new Thread(new MyRunnable(10, slider));
-        secondThread = new Thread(new MyRunnable(90, slider));
+        firstThread = new Thread(new MyRunnable(-5, slider));
+        secondThread = new Thread(new MyRunnable(5, slider));
         firstThread.setDaemon(true);
         secondThread.setDaemon(true);
         firstThread.setPriority(1);

@@ -14,7 +14,9 @@ public class MyRunnable implements Runnable{
     @Override
     public void run() {
         while (!Thread.currentThread().isInterrupted()){
-            slider.setValue(value);
+            synchronized (slider){
+                slider.setValue(slider.getValue() + value);
+            }
         }
     }
 }
