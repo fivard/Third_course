@@ -1,7 +1,6 @@
 package manager;
 
 import java.io.*;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -20,11 +19,11 @@ public class Manager {
             server = new ServerSocket(PORT, 2);
             System.out.println("Server started");
 
-            ProcessBuilder processBuilderF = new ProcessBuilder("java", "FunctionF.java");
-            ProcessBuilder processBuilderG = new ProcessBuilder("java", "FunctionG.java");
-            processBuilderF.directory(new File("/Users/bernada/Documents/GitHub/Third_course/OperationalSystems/lab_1/src/clients"))
+            ProcessBuilder processBuilderF = new ProcessBuilder("java", "-cp", "src", "clients.FunctionF");
+            ProcessBuilder processBuilderG = new ProcessBuilder("java", "-cp", "src", "clients.FunctionG");
+            processBuilderF.directory(new File("/Users/bernada/Documents/GitHub/Third_course/OperationalSystems/lab_1"))
                     .start();
-            processBuilderG.directory(new File("/Users/bernada/Documents/GitHub/Third_course/OperationalSystems/lab_1/src/clients"))
+            processBuilderG.directory(new File("/Users/bernada/Documents/GitHub/Third_course/OperationalSystems/lab_1"))
                     .start();
 
             while (!closenServer){

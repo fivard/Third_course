@@ -10,10 +10,8 @@ public class Client {
     private static BufferedWriter out;
 
     public void process(Function<Integer,Integer> func) {
-
         try {
             try {
-
                 clientSocket = new Socket("localhost", 4004);
                 in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                 out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
