@@ -16,18 +16,17 @@ public class Bear implements Runnable {
     @Override
     public void run() {
         while(true) {
-            synchronized (this) {
-                while (!isAwake) {
-                    try {
-                        wait();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+//            synchronized (this) {
+            while (!pot.isFull()) {
+                try {
+                    wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-                pot.eatAll();
-                isAwake = false;
-                notifyAll();
             }
+            pot.eatAll();
+            isAwake = false;
+//            }
         }
     }
 

@@ -1,7 +1,7 @@
 package task_b;
 
 public class App {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         int numberOfVisitors = 10;
 
         Thread[] threads = new Thread[numberOfVisitors];
