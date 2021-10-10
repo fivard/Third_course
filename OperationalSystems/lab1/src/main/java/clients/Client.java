@@ -2,6 +2,7 @@ package clients;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Timer;
 import java.util.function.Function;
 
 public class Client {
@@ -9,7 +10,7 @@ public class Client {
     private static BufferedReader in;
     private static BufferedWriter out;
 
-    public void process(Function<Integer,Integer> func) {
+    public void process(Function<Integer,Integer> func) throws IOException {
         try {
             try {
                 clientSocket = new Socket("localhost", 4004);
@@ -20,8 +21,7 @@ public class Client {
                 out.flush();
 
                 int parameter = Integer.parseInt(in.readLine());
-
-                out.write(Integer.toString(func.apply(parameter)) + "\n");
+                out.write("Answer:" + func.apply(parameter) + "\n");
                 out.flush();
 
                 out.write("stop\n");
@@ -32,7 +32,8 @@ public class Client {
                 out.close();
             }
         } catch (IOException e) {
-            System.err.println(e);
+            out.write(e + "\n");
+            out.flush();
         }
     }
 }
