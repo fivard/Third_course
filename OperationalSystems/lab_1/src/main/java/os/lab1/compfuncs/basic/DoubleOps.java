@@ -1,4 +1,4 @@
-package compfuncs.basic;
+package os.lab1.compfuncs.basic;
 
 import java.util.Optional;
 

@@ -1,6 +1,6 @@
 package clients;
 
-import compfuncs.basic.*;
+import os.lab1.compfuncs.basic.*;
 
 import java.io.*;
 import java.net.Socket;

@@ -1,8 +1,6 @@
 package clients;
 
-import compfuncs.basic.Conjuction;
-import compfuncs.basic.DoubleOps;
-import compfuncs.basic.IntOps;
+import os.lab1.compfuncs.basic.*;
 
 import java.io.*;
 import java.net.Socket;

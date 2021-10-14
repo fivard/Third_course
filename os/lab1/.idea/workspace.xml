@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="6b6092b8-7331-4776-8a14-68d5f6bc77c1" name="Default Changelist" comment="lab_1">
+      <change afterPath="$PROJECT_DIR$/../../OperationalSystems/lab_1/src/main/java/clients/FunctionF.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../OperationalSystems/lab_1/src/main/java/clients/FunctionG.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../OperationalSystems/lab_1/src/main/java/manager/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../OperationalSystems/lab_1/src/main/java/manager/Manager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../OperationalSystems/lab_1/src/main/java/manager/ServerThread.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../OperationalSystems/lab_1/src/main/java/os/lab1/compfuncs/basic/Conjunction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../OperationalSystems/lab_1/src/main/java/os/lab1/compfuncs/basic/Disjunction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../OperationalSystems/lab_1/src/main/java/os/lab1/compfuncs/basic/DoubleOps.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../OperationalSystems/lab_1/src/main/java/os/lab1/compfuncs/basic/IntOps.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/os/lab1/clients/FunctionF.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/os/lab1/clients/FunctionG.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/os/lab1/compfuncs/basic/Conjuction.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/os/lab1/compfuncs/basic/Disjunction.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/os/lab1/compfuncs/basic/DoubleOps.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/os/lab1/compfuncs/basic/IntOps.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/os/lab1/manager/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/os/lab1/manager/Manager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/os/lab1/manager/ServerThread.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectId" id="1zJJgjN4Kkr69xyT7MKgFhZ251p" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="go.import.settings.migrated" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.19649123" />
+    <property name="project.structure.side.proportion" value="0.3224401" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/os" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="corretto-11" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="manager.Main" />
+      <module name="lab1" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="manager.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6b6092b8-7331-4776-8a14-68d5f6bc77c1" name="Default Changelist" comment="" />
+      <created>1633860372602</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1633860372602</updated>
+      <workItem from="1633860373919" duration="9341000" />
+      <workItem from="1633882545926" duration="3283000" />
+      <workItem from="1634208239873" duration="596000" />
+      <workItem from="1634210038922" duration="6538000" />
+      <workItem from="1634217504607" duration="457000" />
+    </task>
+    <task id="LOCAL-00001" summary="lab_1">
+      <created>1633865503856</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1633865503856</updated>
+    </task>
+    <task id="LOCAL-00002" summary="lab_1">
+      <created>1634216321603</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1634216321603</updated>
+    </task>
+    <task id="LOCAL-00003" summary="lab_1">
+      <created>1634216406257</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1634216406257</updated>
+    </task>
+    <task id="LOCAL-00004" summary="lab_1">
+      <created>1634217009798</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1634217009798</updated>
+    </task>
+    <task id="LOCAL-00005" summary="lab_1">
+      <created>1634217067990</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1634217067990</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Revert &quot;lab_1&quot;&#10;&#10;This reverts commit 679919ca">
+      <created>1634217147674</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1634217147674</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="lab_1" />
+    <MESSAGE value="Revert &quot;lab_1&quot;&#10;&#10;This reverts commit 679919ca" />
+    <option name="LAST_COMMIT_MESSAGE" value="Revert &quot;lab_1&quot;&#10;&#10;This reverts commit 679919ca" />
+  </component>
+</project>

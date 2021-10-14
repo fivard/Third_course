@@ -55,7 +55,7 @@ public class Manager {
     public static void initialiseProcess(String functionName, String parameter) throws IOException {
         ProcessBuilder processBuilder = new ProcessBuilder(
                 "java", "clients.Function" + functionName);
-        processBuilder.directory(new File("/Users/bernada/Documents/GitHub/Third_course/os/lab1/target/classes"));
+        processBuilder.directory(new File("/Users/bernada/Documents/GitHub/Third_course/OperationalSystems/lab_1/target/classes"));
         processesList.add(processBuilder.start());
 
         Socket socket = server.accept();
