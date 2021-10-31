@@ -7,17 +7,17 @@ X, Y = image.imread('x1.bmp'), image.imread('y4.bmp')
 
 def moore_penrose_method(A, sigma0=1, e=1e-5):
     A = np.array(A, dtype=float)
-    t = A.T
-    at = np.dot(A, t)
+    AT = A.T
+    AAT = np.dot(A, AT)
     E = np.eye(A.shape[0])
-    prev = np.dot(t, np.linalg.inv(at + sigma0 * E))
+    prev = np.dot(AT, np.linalg.inv(AAT + sigma0 * E))
     while True:
         sigma_k = sigma0 / 2
-        inv = np.dot(t, np.linalg.inv(at + sigma_k * E))
-        if np.linalg.norm(inv - prev) < e:
+        current = np.dot(AT, np.linalg.inv(AAT + sigma_k * E))
+        if np.linalg.norm(current - prev) < e:
             break
-        prev = inv
-    return inv
+        prev = current
+    return current
 
 
 def greville_method(M):
@@ -45,17 +45,28 @@ def greville_method(M):
     return res
 
 
-A_moore = np.dot(Y, moore_penrose_method(X))
-A_greville = np.dot(Y, greville_method(X))
+def asserting_methods(A_plus_matrix):
+    assert np.dot(np.dot(X, A_plus_matrix), X).all() == X.all()
+    assert np.dot(np.dot(A_plus_matrix, X), A_plus_matrix).all() == A_plus_matrix.all()
+    assert np.allclose(np.dot(X, A_plus_matrix), np.dot(X, A_plus_matrix).T)
+    assert np.allclose(np.dot(A_plus_matrix, X), np.dot(A_plus_matrix, X).T)
+    print("Asserted\n")
+
+
+A_plus_moore = moore_penrose_method(X)
+A_plus_greville = moore_penrose_method(X)
+
+A_moore = np.dot(Y, A_plus_moore)
+A_greville = np.dot(Y, A_plus_greville)
+
+print("Asserting Moore Penrose's method...")
+asserting_methods(A_plus_moore)
+print("Asserting Greville's method...")
+asserting_methods(A_plus_greville)
 
 plt.imshow(Y, cmap='gray')
 plt.show()
 plt.imshow(np.dot(A_moore, X), cmap='gray')
 plt.show()
-plt.imshow(np.dot(A_greville, X), cmap='gray')
-plt.show()
-
-A_greville += A_greville.min()
-
 plt.imshow(np.dot(A_greville, X), cmap='gray')
 plt.show()
