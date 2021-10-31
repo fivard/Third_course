@@ -1,77 +1,61 @@
-import matplotlib.pyplot as plt
 import numpy as np
-from scipy.signal import argrelextrema
-from sklearn.metrics import mean_squared_error
+import matplotlib.pyplot as plt
+from matplotlib import image
+
+X, Y = image.imread('x1.bmp'), image.imread('y4.bmp')
 
 
-def fourier_transform(x):
-    N = x.shape[0]
-    n = np.arange(N)
-    k = n.reshape((N, 1))
-    M = np.exp(-2j * np.pi * k * n / N)
-    return np.dot(M, x) / N
+def moore_penrose_method(A, sigma0=1, e=1e-5):
+    A = np.array(A, dtype=float)
+    t = A.T
+    at = np.dot(A, t)
+    E = np.eye(A.shape[0])
+    prev = np.dot(t, np.linalg.inv(at + sigma0 * E))
+    while True:
+        sigma_k = sigma0 / 2
+        inv = np.dot(t, np.linalg.inv(at + sigma_k * E))
+        if np.linalg.norm(inv - prev) < e:
+            break
+        prev = inv
+    return inv
 
 
-class Model:
-    def __init__(self, data, T, dt):
-        self.data = data
-        self.T = T
-        self.dt = dt
-        self.time = np.arange(0, T + dt, dt)
-        self.n = self.time.shape[0]
+def greville_method(M):
+    M = np.array(M, dtype=float)
+    ai = M[0:1]
+    if np.count_nonzero(ai[0]) == 0:
+        res = np.zeros_like(ai.T)
+    else:
+        res = ai.T / np.dot(ai, ai.T)
 
-    def fourier_transform_data(self):
-        return np.abs(fourier_transform(self.data))
+    n = M.shape[0]
+    for i in range(1, n):
+        z_a = np.eye(res.shape[0]) - np.dot(res, M[:i])
+        r_a = np.dot(res, res.T)
+        ai = M[i:i + 1]
 
-    def find_frequencies(self, transformed_data):
-        transformed_half = transformed_data[:transformed_data.shape[0] // 2 - 1]
-        extremums = np.array(argrelextrema(transformed_half, np.greater))
-        return extremums / int(self.T)
+        dot_product = np.dot(np.dot(ai, z_a), ai.T)
+        if np.count_nonzero(dot_product) != 1:
+            a_inv = np.dot(r_a, ai.T) / (1 + np.dot(np.dot(ai, r_a), ai.T))
+        else:
+            a_inv = np.dot(z_a, ai.T) / dot_product
 
-    def find_params(self, frequencies):
-        b = np.array([np.sum(self.data * self.time ** 3),
-                      np.sum(self.data * self.time ** 2),
-                      np.sum(self.data * self.time),
-                      np.sum(self.data * np.sin(2. * np.pi * frequencies[0][0] * self.time)),
-                      np.sum(self.data)])
-
-        a = np.zeros((b.shape[0], b.shape[0]))
-
-        self.functions = [self.time ** 3,
-                          self.time ** 2,
-                          self.time,
-                          np.sin(2. * np.pi * frequencies[0][0] * self.time),
-                          np.ones(self.n)]
-
-        for i in range(b.shape[0]):
-            for j in range(b.shape[0]):
-                a[i, j] = np.sum(self.functions[i] * self.functions[j])
-        params = np.linalg.inv(a) @ b.T
-        return params
-
-    def calculate_func(self, params):
-        return np.dot(params, self.functions)
-
-    def caclulate_MSE(self, approximated_func):
-        return mean_squared_error(self.data, approximated_func)
-
-    def build_model(self):
-        transformed_data = self.fourier_transform_data()
-        plt.plot(transformed_data)
-        plt.show()
-        frequencies = self.find_frequencies(transformed_data)
-        print('Frequencies:', frequencies)
-        params = self.find_params(frequencies)
-        print('Params:', params)
-        result = self.calculate_func(params)
-        plt.grid(True)
-        plt.plot(self.time, result)
-        plt.show()
-        mse = self.caclulate_MSE(result)
-        print('MSE:', mse)
+        res -= np.dot(a_inv, np.dot(ai, res))
+        res = np.concatenate((res, a_inv), axis=1)
+    return res
 
 
-data_str = open('f4.txt').read().split()
-measurements = np.array(data_str, float)
-model = Model(measurements, 5, 0.01)
-model.build_model()
+A_moore = np.dot(Y, moore_penrose_method(X))
+A_greville = np.dot(Y, greville_method(X))
+
+plt.imshow(Y, cmap='gray')
+plt.show()
+plt.imshow(np.dot(A_moore, X), cmap='gray')
+plt.show()
+plt.imshow(np.dot(A_greville, X), cmap='gray')
+plt.show()
+
+A_greville += A_greville.min()
+
+plt.imshow(np.dot(A_greville, X), cmap='gray')
+plt.show()

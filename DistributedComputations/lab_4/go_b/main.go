@@ -1,4 +1,4 @@
-package go_b
+package main
 
 import (
 	"fmt"
