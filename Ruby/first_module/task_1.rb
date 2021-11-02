@@ -26,7 +26,7 @@ end
 
 puts "Expression's value: ", (a.truncate & b.truncate) | (a.truncate | c.truncate)
 
-if (a.truncate & b.truncate) | (a.truncate | c.truncate) == 0
+if (a.truncate & b.truncate) | (a.truncate | c.truncate) != 0
   answers.each do |key, value|
     print key, " : ", value, "\n"
   end
