@@ -1,8 +1,11 @@
 class House
   attr_accessor :id, :number, :square, :floor, :count_rooms, :street, :building_type, :lifetime
 
-  def initialize(id, number, square, floor, count_rooms, street, building_type="Lok", lifetime=100)
-    @id = id
+  @@id = 1
+
+  def initialize(number, square, floor, count_rooms, street, building_type="Lok", lifetime=100)
+    @id = @@id
+    @@id = @@id + 1
     @number = number
     @square = square
     @floor = floor
@@ -47,13 +50,14 @@ class House_controller
 
 end
 
-house_1 = House.new(1, 27,123,5,5, "New1", "Lok2", 10)
-house_2 = House.new(2, 20,97,1,2, "New2", "Lok5", 20)
-house_3 = House.new(3, 12,86,3,3, "New3", "Lok5", 30)
-house_4 = House.new(4, 48,23,2,2, "New4", "Lok2", 40)
-house_5 = House.new(5, 90,101,4,6, "New6", "Lok1")
+house_1 = House.new( 27,123,5,5, "New1", "Lok2", 10)
+house_2 = House.new( 20,97,1,2, "New2", "Lok5", 20)
+house_3 = House.new( 12,86,3,3, "New3", "Lok5", 30)
+house_4 = House.new( 48,23,2,2, "New4", "Lok2", 40)
+house_5 = House.new( 90,101,4,6, "New6", "Lok1")
 
 array = [house_1, house_2, house_3, house_4, house_5]
+
 puts "Filter by rooms"
 House_controller.filter_rooms(array, 5)
 puts "\nFilter by rooms and floor"
