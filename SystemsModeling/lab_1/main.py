@@ -67,6 +67,8 @@ class Model:
         plt.grid(True)
         plt.plot(self.time, result)
         plt.show()
+        plt.plot(self.time, self.data)
+        plt.show()
         mse = self.caclulate_MSE(result)
         print('MSE:', mse)
 
