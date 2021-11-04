@@ -14,10 +14,14 @@ public class Participant extends Thread {
         start();
     }
 
+    public int getNumber(){
+        return number;
+    }
+
     public void makePayment(){
         double chanceToPay = Math.random();
         currentPayment = 0;
-        if (chanceToPay < 0.1){
+        if (chanceToPay < 0.5){
             System.out.println("Customer " + number + " can't make a payment. Skip the next 2 lots");
             lotsToSkip = 2;
         }
@@ -29,7 +33,9 @@ public class Participant extends Thread {
     }
 
     public int getPayment(){
-        return currentPayment;
+        int payment = currentPayment;
+        currentPayment = 0;
+        return payment;
     }
 
     @Override
@@ -37,25 +43,28 @@ public class Participant extends Thread {
         System.out.println("Started new customer " + number);
         while (true){
             if (Auction.startLot.get()){
-                if (lotsToSkip > 0 && !skippedTheCurrentLot){
-                    lotsToSkip--;
-                    skippedTheCurrentLot = true;
-                    System.out.println("Customer " + number + " skipped the current lot");
-                }
+                if (!skippedTheCurrentLot) {
+                    if (lotsToSkip > 0) {
+                        lotsToSkip--;
+                        skippedTheCurrentLot = true;
+                        System.out.println("Customer " + number + " skipped the current lot");
+                        continue;
+                    }
 
-                double chanceToRaise = Math.random();
-                if (chanceToRaise > 0.7)
-                    raisePayment();
+                    double chanceToRaise = Math.random();
+                    if (chanceToRaise > 0.7)
+                        raisePayment();
 
-                try {
-                    TimeUnit.SECONDS.sleep(5);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    try {
+                        TimeUnit.SECONDS.sleep(1);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+
+                    }
                 }
             } else {
                 if (lotsToSkip > 0)
                     skippedTheCurrentLot = false;
-                currentPayment = 0;
             }
         }
     }

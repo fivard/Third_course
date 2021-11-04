@@ -20,6 +20,7 @@ public class Lot implements Runnable {
 
             System.out.println("Stopped all raise");
             maxPayment = Auction.participants.get(0).getPayment();
+            maxPaymentCustomer = Auction.participants.get(0);
             for (int i = 0; i < Auction.countParticipants; i++) {
                 int newPayment = Auction.participants.get(i).getPayment();
                 if (newPayment > maxPayment) {
@@ -27,6 +28,7 @@ public class Lot implements Runnable {
                     maxPaymentCustomer = Auction.participants.get(i);
                 }
             }
+
             System.out.println("Customer " + maxPaymentCustomer.number + " proposed the biggest payment " + maxPayment);
             maxPaymentCustomer.makePayment();
 
