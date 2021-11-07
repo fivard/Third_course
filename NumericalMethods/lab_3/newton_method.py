@@ -30,6 +30,6 @@ while np.linalg.norm(z_vector, np.inf) > eps or step == 0:
 
 x_vector = x_vector - z_vector
 x, y = x_vector[0], x_vector[1]
-print("Answer is [x, y] is [", f'{x:9.3f}', ",", f'{y:9.3f}', "]")
-print(f"f1 = {eval(f1):9.5f}")
-print(f"f2 = {eval(f2):9.5f}")
+print("Answer [x, y] is [", f'{x:9.3f}', ",", f'{y:9.3f}', "]")
+print(f"f1 = {eval(f1):.5f}")
+print(f"f2 = {eval(f2):.5f}")
