@@ -1,13 +1,12 @@
 import math
 
 import numpy as np
-import numpy.polynomial.polynomial as poly
 import matplotlib.pyplot as plt
 
 a = -5
 b = 5
 N = 9
-step = (b - a) / 9
+step = (b - a) / N
 
 
 def test_function1(x):
@@ -30,16 +29,22 @@ def calculate_separated_difference(x_array, y_array, i, j):
     return (y_array[j+1] - y_array[j]) / (x_array[i+j+1] - x_array[j])
 
 
+def generate_template_polynomial():
+    koef_template = "fx.$"
+    bracket_template = "(x-x$)"
+    polynomial = ""
+    for i in range(N):
+        polynomial += koef_template.replace("$", str(i))
+        for j in range(i):
+            polynomial += "*" + bracket_template.replace("$", str(j))
+        if i < N-1:
+            polynomial += " + "
+    return polynomial
+
+
 def newton_polynomial(x_points, y_points):
-    polynomial = "fx.0 + " \
-                 "fx.1*(x-x0) + " \
-                 "fx.2*(x-x0)*(x-x1) + " \
-                 "fx.3*(x-x0)*(x-x1)*(x-x2) + " \
-                 "fx.4*(x-x0)*(x-x1)*(x-x2)*(x-x3) + " \
-                 "fx.5*(x-x0)*(x-x1)*(x-x2)*(x-x3)*(x-x4) + " \
-                 "fx.6*(x-x0)*(x-x1)*(x-x2)*(x-x3)*(x-x4)*(x-x5) + " \
-                 "fx.7*(x-x0)*(x-x1)*(x-x2)*(x-x3)*(x-x4)*(x-x5)*(x-x6) + " \
-                 "fx.8*(x-x0)*(x-x1)*(x-x2)*(x-x3)*(x-x4)*(x-x5)*(x-x6)*(x-x7)"
+    polynomial = generate_template_polynomial()
+    # print(polynomial)
     koef = [y_points[0]]
     prev_separated_differences = y_points
     for i in range(N-1):
