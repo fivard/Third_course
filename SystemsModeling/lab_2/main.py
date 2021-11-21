@@ -64,6 +64,8 @@ asserting_methods(A_plus_moore)
 print("Asserting Greville's method...")
 asserting_methods(A_plus_greville)
 
+plt.imshow(X, cmap='gray')
+plt.show()
 plt.imshow(Y, cmap='gray')
 plt.show()
 plt.imshow(np.dot(A_moore, X), cmap='gray')
