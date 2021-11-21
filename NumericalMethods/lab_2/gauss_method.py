@@ -1,9 +1,11 @@
 import numpy as np
-np.set_printoptions(precision=3)
-given_matrix = np.matrix('11,     7,      3,      7,      2;'
-                         '7,      10,    -1,     4,       2;'
+np.set_printoptions(precision=5)
+given_matrix = np.matrix('7,     11,      3,      7,      2;'
+                         '11,     10,    -1,     4,       2;'
                          '3,      -1,     16,     -7,     -3;'
                          '7,      4,      -7,     15,     5')
+
+vector = np.matrix('2, 2, -3, 5')
 
 
 def generate_m(matrix, iteration):
@@ -45,7 +47,7 @@ def gauss_method(matrix):
     x3 = matrix[2, 4] - matrix[2, 3] * x4
     x2 = matrix[1, 4] - matrix[1, 3] * x4 - matrix[1, 2] * x3
     x1 = matrix[0, 4] - matrix[0, 3] * x4 - matrix[0, 2] * x3 - matrix[0, 1] * x2
-    print('\nSolution: x1 = %0.3f, x2 = %0.3f, x3 = %0.3f and x4 = %0.3f\n' % (x1, x2, x3, x4))
+    print('\nSolution: x1 = %0.5f, x2 = %0.5f, x3 = %0.5f and x4 = %0.5f\n' % (x1, x2, x3, x4))
 
 
 gauss_method(given_matrix)
