@@ -43,51 +43,39 @@ public class PageFault {
    * @param mem is the vector which contains the contents of the pages 
    *   in memory being simulated.  mem should be searched to find the 
    *   proper page to remove, and modified to reflect any changes.  
-   * @param virtPageNum is the number of virtual pages in the 
+   * @param virtualPageNum is the number of virtual pages in the
    *   simulator (set in Kernel.java).  
    * @param replacePageNum is the requested page which caused the 
    *   page fault.  
    * @param controlPanel represents the graphical element of the 
    *   simulator, and allows one to modify the current display.
    */
-  public static void replacePage ( Vector mem , int virtPageNum , int replacePageNum , ControlPanel controlPanel ) 
+  public static int replacePage (Vector<Page> mem , int virtualPageNum , int replacePageNum , ControlPanel controlPanel)
   {
-    int count = 0;
-    int oldestPage = -1;
-    int oldestTime = 0;
-    int firstPage = -1;
-    int map_count = 0;
-    boolean mapped = false;
+    int lowestAgingPageNum = 0;
+    while (mem.elementAt(lowestAgingPageNum).physical == -1)
+      lowestAgingPageNum++;
 
-    while ( !(mapped) || count != virtPageNum ) {
-      Page page = ( Page ) mem.elementAt( count );
+    for (int i = 0; i < virtualPageNum; i++) {
+      Page page = mem.elementAt(i);
       if (page.physical != -1) {
-        if (firstPage == -1) {
-          firstPage = count;
-        }
-        if (page.inMemTime > oldestTime) {
-          oldestTime = page.inMemTime;
-          oldestPage = count;
-          mapped = true;
+        if (page.aging < mem.elementAt(lowestAgingPageNum).aging) {
+          lowestAgingPageNum = i;
         }
       }
-      count++;
-      if ( count == virtPageNum ) {
-        mapped = true;
-      }
     }
-    if (oldestPage == -1) {
-      oldestPage = firstPage;
-    }
-    Page page = ( Page ) mem.elementAt( oldestPage );
-    Page nextpage = ( Page ) mem.elementAt( replacePageNum );
-    controlPanel.removePhysicalPage( oldestPage );
-    nextpage.physical = page.physical;
-    controlPanel.addPhysicalPage( nextpage.physical , replacePageNum );
+
+    Page page = mem.elementAt(lowestAgingPageNum);
+    Page nextPage = mem.elementAt(replacePageNum);
+
+    nextPage.physical = page.physical;
+    controlPanel.addPhysicalPage(nextPage.physical, replacePageNum );
+
     page.inMemTime = 0;
     page.lastTouchTime = 0;
-    page.R = 0;
-    page.M = 0;
     page.physical = -1;
+    controlPanel.removePhysicalPage(lowestAgingPageNum);
+
+    return replacePageNum;
   }
 }

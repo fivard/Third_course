@@ -10,6 +10,7 @@ public class ControlPanel extends Frame {
     Button resetButton = new Button("reset");
     Button exitButton = new Button("exit");
     Vector<Button> pagesButtons = new Vector<>();
+    Vector<Label> pagesLabels = new Vector<>();
     Label statusValueLabel = new Label("STOP", Label.LEFT);
     Label timeValueLabel = new Label("0", Label.LEFT);
     Label instructionValueLabel = new Label("NONE", Label.LEFT);
@@ -17,13 +18,9 @@ public class ControlPanel extends Frame {
     Label pageFaultValueLabel = new Label("NO", Label.LEFT);
     Label virtualPageValueLabel = new Label("x", Label.LEFT);
     Label physicalPageValueLabel = new Label("0", Label.LEFT);
-    Label RValueLabel = new Label("0", Label.LEFT);
-    Label MValueLabel = new Label("0", Label.LEFT);
     Label inMemTimeValueLabel = new Label("0", Label.LEFT);
     Label lastTouchTimeValueLabel = new Label("0", Label.LEFT);
-    Label lowValueLabel = new Label("0", Label.LEFT);
-    Label highValueLabel = new Label("0", Label.LEFT);
-    Vector<Label> pagesLabels = new Vector<>();
+    Label agingValueLabel = new Label("00000000", Label.LEFT);
 
     public ControlPanel(String title) {
         super(title);
@@ -39,7 +36,7 @@ public class ControlPanel extends Frame {
         setLayout(null);
         setBackground(Color.white);
         setForeground(Color.black);
-        resize(635, 545);
+        resize(700, 545);
         setFont(new Font("Courier", 0, 12));
 
         runButton.setForeground(Color.blue);
@@ -79,7 +76,7 @@ public class ControlPanel extends Frame {
         instructionValueLabel.reshape(385, 45 + 25, 100, 15);
         add(instructionValueLabel);
 
-        addressValueLabel.reshape(385, 60 + 25, 230, 15);
+        addressValueLabel.reshape(385, 60 + 25, 300, 15);
         add(addressValueLabel);
 
         pageFaultValueLabel.reshape(385, 90 + 25, 100, 15);
@@ -91,23 +88,14 @@ public class ControlPanel extends Frame {
         physicalPageValueLabel.reshape(395, 135 + 25, 200, 15);
         add(physicalPageValueLabel);
 
-        RValueLabel.reshape(395, 150 + 25, 200, 15);
-        add(RValueLabel);
-
-        MValueLabel.reshape(395, 165 + 25, 200, 15);
-        add(MValueLabel);
-
-        inMemTimeValueLabel.reshape(395, 180 + 25, 200, 15);
+        inMemTimeValueLabel.reshape(395, 150 + 25, 200, 15);
         add(inMemTimeValueLabel);
 
-        lastTouchTimeValueLabel.reshape(395, 195 + 25, 200, 15);
+        lastTouchTimeValueLabel.reshape(395, 165 + 25, 200, 15);
         add(lastTouchTimeValueLabel);
 
-        lowValueLabel.reshape(395, 210 + 25, 230, 15);
-        add(lowValueLabel);
-
-        highValueLabel.reshape(395, 225 + 25, 230, 15);
-        add(highValueLabel);
+        agingValueLabel.reshape(395, 180 + 25, 230, 15);
+        add(agingValueLabel);
 
         Label virtualOneLabel = new Label("virtual", Label.CENTER);
         virtualOneLabel.reshape(0, 15 + 25, 70, 15);
@@ -153,29 +141,17 @@ public class ControlPanel extends Frame {
         physicalPageLabel.reshape(285, 135 + 25, 110, 15);
         add(physicalPageLabel);
 
-        Label RLabel = new Label("R: ", Label.LEFT);
-        RLabel.reshape(285, 150 + 25, 110, 15);
-        add(RLabel);
-
-        Label MLabel = new Label("M: ", Label.LEFT);
-        MLabel.reshape(285, 165 + 25, 110, 15);
-        add(MLabel);
-
         Label inMemTimeLabel = new Label("inMemTime: ", Label.LEFT);
-        inMemTimeLabel.reshape(285, 180 + 25, 110, 15);
+        inMemTimeLabel.reshape(285, 150 + 25, 110, 15);
         add(inMemTimeLabel);
 
         Label lastTouchTimeLabel = new Label("lastTouchTime: ", Label.LEFT);
-        lastTouchTimeLabel.reshape(285, 195 + 25, 110, 15);
+        lastTouchTimeLabel.reshape(285, 165 + 25, 110, 15);
         add(lastTouchTimeLabel);
 
-        Label lowLabel = new Label("low: ", Label.LEFT);
-        lowLabel.reshape(285, 210 + 25, 110, 15);
-        add(lowLabel);
-
-        Label highLabel = new Label("high: ", Label.LEFT);
-        highLabel.reshape(285, 225 + 25, 110, 15);
-        add(highLabel);
+        Label agingLabel = new Label("aging: ", Label.LEFT);
+        agingLabel.reshape(285, 180 + 25, 110, 15);
+        add(agingLabel);
 
         for (int i = 0; i < 64; i++){
             Label l = pagesLabels.elementAt(i);
@@ -193,12 +169,18 @@ public class ControlPanel extends Frame {
     public void paintPage(Page page) {
         virtualPageValueLabel.setText(Integer.toString(page.id));
         physicalPageValueLabel.setText(Integer.toString(page.physical));
-        RValueLabel.setText(Integer.toString(page.R));
-        MValueLabel.setText(Integer.toString(page.M));
         inMemTimeValueLabel.setText(Integer.toString(page.inMemTime));
         lastTouchTimeValueLabel.setText(Integer.toString(page.lastTouchTime));
-        lowValueLabel.setText(Long.toString(page.low, Kernel.addressradix));
-        highValueLabel.setText(Long.toString(page.high, Kernel.addressradix));
+        agingValueLabel.setText(toBinary(page.aging, 8));
+    }
+
+    public static String toBinary(long n, int len)
+    {
+        String binary = "";
+        for (long i = (1L << len - 1); i > 0; i = i / 2) {
+            binary += (n & i) != 0 ? "1" : "0";
+        }
+        return binary;
     }
 
     public void setStatus(String status) {
@@ -229,7 +211,7 @@ public class ControlPanel extends Frame {
         } else if (e.target == stepButton) {
             setStatus("STEP");
             kernel.step();
-            if (kernel.runcycles == kernel.runs) {
+            if (kernel.runCycles == kernel.runs) {
                 stepButton.disable();
                 runButton.disable();
             }
