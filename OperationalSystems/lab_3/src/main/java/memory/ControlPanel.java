@@ -179,7 +179,7 @@ public class ControlPanel extends Frame {
 
         for (int i = 0; i < 64; i++){
             Label l = pagesLabels.elementAt(i);
-            l.reshape(70 + i / 32 * 140, (i + 2) * 15 + 25, 60, 15);
+            l.reshape(70 + i / 32 * 140, (i % 32 + 2) * 15 + 25, 60, 15);
             l.setForeground(Color.red);
             l.setFont(new Font("Courier", 0, 10));
             add(l);
@@ -206,8 +206,9 @@ public class ControlPanel extends Frame {
     }
 
     public void addPhysicalPage(int pageNum, int physicalPage) {
-        if (physicalPage < 64)
+        if (physicalPage < 64) {
             pagesLabels.elementAt(physicalPage).setText("page " + pageNum);
+        }
     }
 
     public void removePhysicalPage(int physicalPage) {
