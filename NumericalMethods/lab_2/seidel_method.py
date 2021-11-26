@@ -1,7 +1,7 @@
 import numpy as np
 
 matrix = np.matrix('11,     7,      3,      7;'
-                   '7,      10,    -1,     4;'
+                   '7,      10,     -1,     4;'
                    '3,      -1,     16,     -7;'
                    '7,      4,      -7,     15')
 
@@ -48,10 +48,7 @@ while condition:
     x13 = f3(x11, x12, x03, x04)
     x14 = f4(x11, x12, x13, x04)
     print('%d\t%0.4f\t%0.4f\t%0.4f\t%0.4f\n' % (count, x11, x12, x13, x14))
-    e1 = abs(x01 - x11)
-    e2 = abs(x02 - x12)
-    e3 = abs(x03 - x13)
-    e4 = abs(x04 - x14)
+    e1, e2, e3, e4 = abs(x01 - x11), abs(x02 - x12), abs(x03 - x13), abs(x04 - x14)
 
     count += 1
     x01 = x11
