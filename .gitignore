@@ -21,3 +21,6 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+/OOP/lab_1/GunShootSimulation/nbproject/private/
+/OOP/lab_1/GunShootSimulation/build/
+/OOP/lab_1/JmeTests/nbproject/private/
