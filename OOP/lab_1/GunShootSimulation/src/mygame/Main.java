@@ -32,14 +32,12 @@ public class Main extends SimpleApplication {
     app.start();
   }
 
-  /** Prepare the Physics Application State (jBullet) */
   private BulletAppState bulletAppState;
   private static int gravity = 10;
 
   Material stone_mat;
   Material floor_mat;
 
-  /** Prepare geometries and physical nodes for bricks and cannon balls. */
   private RigidBodyControl      ballPhy;
   private static final Sphere   sphere;
   private RigidBodyControl      floorPhy;
@@ -100,7 +98,6 @@ public class Main extends SimpleApplication {
     }
   };
 
-  /** Initialize the materials used in this scene. */
   public void initMaterials() {
 
     stone_mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
@@ -122,7 +119,7 @@ public class Main extends SimpleApplication {
     floor_geo.setMaterial(floor_mat);
     floor_geo.setLocalTranslation(0, -0.1f, 0);
     rootNode.attachChild(floor_geo);
-    /* Make the floor physical with mass 0.0f! */
+    
     floorPhy = new RigidBodyControl(0.0f);
     floor_geo.addControl(floorPhy);
     bulletAppState.getPhysicsSpace().add(floorPhy);
@@ -148,18 +145,13 @@ public class Main extends SimpleApplication {
    }
 
    public void makeCannonBall() {
-    
     Geometry ball_geo = new Geometry("cannon ball", sphere);
     ball_geo.setMaterial(stone_mat);
     rootNode.attachChild(ball_geo);
-    
     ball_geo.setLocalTranslation(new Vector3f(-10, 0, 0));
-    
     ballPhy = new RigidBodyControl(1f);
-    
     ball_geo.addControl(ballPhy);
     bulletAppState.getPhysicsSpace().add(ballPhy);
-    
     ballPhy.setLinearVelocity(new Vector3f(0, 0.4f, -1).mult(20));
     ballPhy.setGravity(new Vector3f(0, -gravity, 0));
   }
