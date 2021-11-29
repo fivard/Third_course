@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><!DOCTYPE Library SYSTEM "library.dtd">
+<Library>
+    <Author id="author2" name="Shevchenko">
+        <Book authorId="author2" id="id2" name="Hello" releaseYear="1867"/>
+        <Book authorId="author2" id="id5" name="Vasya" releaseYear="1987"/>
+    </Author>
+    <Author id="author1" name="Kocubynskyi">
+        <Book authorId="author1" id="id1" name="Hey" releaseYear="1789"/>
+    </Author>
+    <Author id="author0" name="Franko">
+        <Book authorId="author0" id="id0" name="aloha" releaseYear="1987"/>
+    </Author>
+    <Author id="author3" name="Lesya Ukrainka">
+        <Book authorId="author3" id="id3" name="Kek" releaseYear="300"/>
+        <Book authorId="author3" id="id4" name="Lol" releaseYear="401"/>
+    </Author>
+</Library>

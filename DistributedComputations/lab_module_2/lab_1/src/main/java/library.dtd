@@ -1,0 +1,13 @@
+<!ELEMENT Library (Author*)>
+        <!ELEMENT Author (Book*)>
+        <!ELEMENT Book (#PCDATA)>
+        <!ATTLIST Author
+                id ID #REQUIRED
+                name CDATA #REQUIRED
+                >
+        <!ATTLIST Book
+                id ID #REQUIRED
+                authorId IDREF #REQUIRED
+                name CDATA #REQUIRED
+                releaseYear CDATA #REQUIRED
+                >

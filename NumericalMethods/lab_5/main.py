@@ -71,13 +71,12 @@ def integral():
     A = getA(b_curr)
     for i in range(1, len(timestamps)):
         y_prev = yy[i - 1]
-        k1 = dt * (A @ y_prev)
-        k2 = dt * (A @ y_prev + k1 / 2)
-        k3 = dt * (A @ y_prev + k2 / 2)
-        k4 = dt * (A @ y_prev + k3)
+        k1 = dt * calc_f(y_prev, b_curr)
+        k2 = dt * calc_f(y_prev + k1 / 2, b_curr)
+        k3 = dt * calc_f(y_prev + k2 / 2, b_curr)
+        k4 = dt * calc_f(y_prev + k3, b_curr)
         y = y_prev + (k1 + 2 * k2 + 2 * k3 + k4) / 6
         yy[i] = y
-
     uu = np.zeros((len(timestamps), 6, 3))
     db = calc_db(yy.T, b_curr)
     for i in range(1, len(timestamps)):
@@ -87,7 +86,6 @@ def integral():
         k4 = dt * (A @ (uu[i - 1] + k3) + db[i - 1])
         u_next = uu[i - 1] + (k1 + 2 * k2 + 2 * k3 + k4) / 6
         uu[i] = u_next
-
     return [yy, uu]
 
 
