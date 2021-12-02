@@ -1,0 +1,31 @@
+<%= form_with model: passenger do |form| %>
+  <div>
+    <%= form.label :name %><br>
+    <%= form.text_field :name %>
+    <% passenger.errors.full_messages_for(:name).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :count %><br>
+    <%= form.text_field :count %><br>
+    <% passenger.errors.full_messages_for(:count).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :weight %><br>
+    <%= form.text_field :weight %><br>
+    <% passenger.errors.full_messages_for(:weight).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
+
+<%= link_to "Main", root_path%>

@@ -1,0 +1,23 @@
+<h1>Double passenger with the same counts</h1>
+
+<% @passengers.each do |double_passengers|%>
+  <div>NEXT</div>
+  <ul>
+    <li >
+      <p><%= link_to double_passengers[:passenger_1].name , double_passengers[:passenger_1] %></p>
+      <p><%= double_passengers[:passenger_1].count %></p>
+      <p><%= double_passengers[:passenger_1].weight%></p>
+    </li>
+    <li>
+      <p><%= link_to double_passengers[:passenger_2].name , double_passengers[:passenger_2] %></p>
+      <p><%= double_passengers[:passenger_2].count %></p>
+      <p><%= double_passengers[:passenger_2].weight%></p>
+    </li>
+  </ul>
+<%end%>
+
+<div>
+  <%= link_to root_path do%>
+    <p>Back</p>
+  <%end%>
+</div>

@@ -1,0 +1,26 @@
+<h1>Passengers</h1>
+
+<%= render "list", passenger: @passengers %>
+
+<div>
+  <%= link_to  new_passenger_path do%>
+    <p>Add passenger</p>
+  <%end%>
+</div>
+
+<h2>Queries</h2>
+<%= link_to  "/passengers/query1" do%>
+  <p>Query1</p>
+<%end%>
+<%= link_to  "/passengers/query2" do%>
+  <p>Query2</p>
+<%end%>
+<%= link_to  "/passengers/query3" do%>
+  <p>Query3</p>
+<%end%>
+<%= link_to  "/passengers/query4" do%>
+  <p>Query4</p>
+<%end%>
+<%= link_to  "/passengers/query5" do%>
+  <p>Query5</p>
+<%end%>
