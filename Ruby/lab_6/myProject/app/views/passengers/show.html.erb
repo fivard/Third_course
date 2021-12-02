@@ -1,0 +1,15 @@
+<h1><%= @passenger.name %></h1>
+
+<p><%= @passenger.count %></p>
+
+<p><%= @passenger.weight %></p>
+
+<ul>
+  <li><%= link_to "Edit", edit_passenger_path(@passenger) %></li>
+  <li><%= link_to "Destroy", passenger_path(@passenger),
+                  method: :delete,
+                  data: { confirm: "Are you sure?" } %></li>
+</ul>
+
+
+<%= link_to "Main", root_path%>

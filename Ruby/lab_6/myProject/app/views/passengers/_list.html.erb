@@ -1,0 +1,9 @@
+<ul>
+  <% @passengers.each do |passenger| %>
+    <li >
+      <p><%= link_to passenger.name , passenger %></p>
+      <p><%= passenger.count %></p>
+      <p><%= passenger.weight%></p>
+    </li>
+  <% end %>
+</ul>
