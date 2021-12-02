@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="8d29a00d-1296-402f-a09c-73af23fbbe74" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/DistributedComputations/lab_module_1/lab_1/lab_1.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DistributedComputations/lab_module_1/lab_2/go_b/go_b.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DistributedComputations/lab_module_1/lab_2/java_a_c/lab_2.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DistributedComputations/lab_module_1/lab_3/go_c/go_c.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DistributedComputations/lab_module_1/lab_3/java_a_b/java_a_b.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DistributedComputations/lab_module_1/lab_4/go_b/go_b.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DistributedComputations/lab_module_1/lab_4/java_a_c/java_a_c.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ruby/lab_6/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ruby/lab_6/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ruby/lab_6/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Ruby/lab_6/.idea/vcs.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="21kZOj0DD39LkFOvUbUVxsON3ud" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="go.import.settings.migrated" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8d29a00d-1296-402f-a09c-73af23fbbe74" name="Default Changelist" comment="" />
+      <created>1638487015219</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1638487015219</updated>
+      <workItem from="1638487016540" duration="15000" />
+    </task>
+    <servers />
+  </component>
+</project>

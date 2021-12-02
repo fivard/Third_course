@@ -1,0 +1,5 @@
+READ a ... okay
+WRITE bffff ... page fault
+WRITE cfff1 ... page fault
+WRITE dfff1 ... page fault
+WRITE 0 ... page fault
