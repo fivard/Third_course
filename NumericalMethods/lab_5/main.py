@@ -1,107 +1,79 @@
 import numpy as np
-
-with open('y4.txt') as file:
-    data = np.array([line.split() for line in file.readlines()], float).T
-
-c1 = 0.14
-c2 = 0.3
-c4 = 0.12
-m1 = 12
+from matplotlib import pyplot as plt
 
 
-def getA(b):
-    return np.array([
-        [0, 1, 0, 0, 0, 0],
-        [-(c2 + c1) / m1, 0, c2 / m1, 0, 0, 0],
-        [0, 0, 0, 1, 0, 0],
-        [c2 / b[0], 0, -(c2 + b[1]) / b[0], 0, b[1] / b[0], 0],
-        [0, 0, 0, 0, 0, 1],
-        [0, 0, b[1] / b[2], 0, -(c4 + b[1]) / b[2], 0]
-    ])
+def get_A(n):
+    res = np.zeros((n - 2, n - 2))
+    for i in range(0, n - 2):
+        cur = np.zeros(n - 2)
+        for j in range(i - 1, i + 2):
+            if j == i:
+                cur[j] = 2 / 3
+            elif 0 <= j < n - 2:
+                cur[j] = 1 / 6
+        res[i] = cur
+    return res
 
 
-def calc_db(y, b):
-    db0 = np.array([
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0],
-        [- c2 / (b[0] ** 2), 0, (c2 + b[1]) / (b[0] ** 2), 0, -b[1] / (b[0] ** 2), 0],
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0]
-    ])
-
-    db1 = np.array([
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, -1 / b[0], 0, 1 / b[0], 0],
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 1 / b[2], 0, -1 / b[2], 0]
-    ])
-
-    db2 = np.array([
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, -b[1] / (b[2]**2), 0, (c4 + b[1]) / (b[2]**2), 0]
-    ])
-
-    db0 = db0 @ y
-    db1 = db1 @ y
-    db2 = db2 @ y
-
-    return np.array([db0, db1, db2]).T
+def get_H(n):
+    res = np.zeros((n - 2, n))
+    for i in range(0, n - 2):
+        cur = np.zeros(n)
+        for j in range(i, i + 3):
+            if j == i + 1:
+                cur[j] = -2
+            elif j < n:
+                cur[j] = 1
+        res[i] = cur
+    return res
 
 
-def calc_f(y, b):
-    return getA(b) @ y
+def get_m(n, f):
+    A = get_A(n)
+    H = get_H(n)
+    return np.concatenate(([0], np.linalg.inv(A) @ H @ f, [0]))
 
 
-b0 = np.array([21, 0.15, 11])
-dt = 0.2
-eps = 0.001
-timestamps = np.linspace(0, 50, 251)
+def get_s(x, f):
+    M = get_m(x.size, f) / 6
+    s = lambda p, i: M[i - 1] * ((x[i] - p) ** 3) + M[i] * ((p - x[i - 1]) ** 3) + (f[i - 1] - M[i - 1]) * (
+                x[i] - p) + (f[i] - M[i]) * (p - x[i - 1])
+    return s
 
 
-def integral():
-    yy = np.zeros_like(data)
-    yy[0] = data[0].copy()
-    A = getA(b_curr)
-    for i in range(1, len(timestamps)):
-        y_prev = yy[i - 1]
-        k1 = dt * calc_f(y_prev, b_curr)
-        k2 = dt * calc_f(y_prev + k1 / 2, b_curr)
-        k3 = dt * calc_f(y_prev + k2 / 2, b_curr)
-        k4 = dt * calc_f(y_prev + k3, b_curr)
-        y = y_prev + (k1 + 2 * k2 + 2 * k3 + k4) / 6
-        yy[i] = y
-    uu = np.zeros((len(timestamps), 6, 3))
-    db = calc_db(yy.T, b_curr)
-    for i in range(1, len(timestamps)):
-        k1 = dt * (A @ uu[i - 1] + db[i - 1])
-        k2 = dt * (A @ (uu[i - 1] + k1 / 2) + db[i - 1])
-        k3 = dt * (A @ (uu[i - 1] + k2 / 2) + db[i - 1])
-        k4 = dt * (A @ (uu[i - 1] + k3) + db[i - 1])
-        u_next = uu[i - 1] + (k1 + 2 * k2 + 2 * k3 + k4) / 6
-        uu[i] = u_next
-    return [yy, uu]
+def get_L(x, f):
+    def L(p, i):
+        return (f[i - 1] * (p - x[i]    ) * (p - x[i + 1])) / 2 - \
+               f[i]      * (p - x[i - 1]) * (p - x[i + 1]) + \
+               (f[i + 1] * (p - x[i - 1]) * (p - x[i])) / 2
+
+    return L
 
 
-bb = [b0]
+xx, step = np.linspace(-5, 5, 11, retstep=True)
 
-while True:
-    b_curr = bb[-1].copy()
-    yy, uu = integral()
+assert step == 1
+yy = np.random.randint(50, size=11)
+for i in range(1, len(xx)):
+    yy[i] = yy[i - 1] + np.random.randint(-10, 10)
+print(yy)
 
-    du = np.linalg.inv((np.array([u.T @ u for u in uu]) * dt).sum(0))
-    uY = (np.array([uu[i].T @ (data[i] - yy[i]) for i in range(len(timestamps))]) * dt).sum(0)
-    db = du @ uY
+s = get_s(xx, yy)
+L = get_L(xx, yy)
 
-    bb.append(b_curr + db)
+plt.plot(xx, yy)
+plt.show()
 
-    if np.abs(db).max() < eps:
-        break
+for i, (start, stop) in enumerate(zip(xx, xx[1:])):
+    x_hat = np.linspace(start, stop, num=50)
+    y_hat = [s(x, i + 1) for x in x_hat]
+    plt.plot(x_hat, y_hat)
+plt.show()
 
-print(np.round(b_curr, 2))
+for i, (start, stop) in enumerate(zip(xx[::2], xx[2::2])):
+    x_hat = np.linspace(start, stop, num=50)
+    y_hat = [L(x, 2*i + 1) for x in x_hat]
+    plt.plot(x_hat, y_hat)
+
+plt.show()
+
