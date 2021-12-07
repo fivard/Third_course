@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Gesture tracker</string>
+    <string name="mode_training">Training Mode</string>
+    <string name="mode_training_info">Hold the button to input training gesture.</string>
+    <string name="mode_recognition">Recognition Mode</string>
+    <string name="mode_recognition_info">Hold the button to input gesture to recognize.</string>
+    <string name="training">Training</string>
+    <string name="recognition">Recognition</string>
+    <string name="feedback">feedback</string>
+    <string name="hold">Hold</string>
+</resources>
