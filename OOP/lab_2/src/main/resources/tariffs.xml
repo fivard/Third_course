@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tariffs>
+    <tariff id="1">
+        <name>1</name>
+        <operatorName>1</operatorName>
+        <payroll>1</payroll>
+        <SMSPrice>1</SMSPrice>
+        <callPrices>
+            <inNetwork>1</inNetwork>
+            <outNetwork>1</outNetwork>
+            <stationary>1</stationary>
+        </callPrices>
+        <parameters>
+            <tariffication>1</tariffication>
+            <connectionCost>1</connectionCost>
+        </parameters>
+    </tariff>
+
+    <tariff id="2">
+        <name>1</name>
+        <operatorName>1</operatorName>
+        <payroll>1</payroll>
+        <SMSPrice>1</SMSPrice>
+        <callPrices>
+            <inNetwork>1</inNetwork>
+            <outNetwork>1</outNetwork>
+            <stationary>1</stationary>
+        </callPrices>
+        <parameters>
+            <tariffication>1</tariffication>
+            <connectionCost>1</connectionCost>
+        </parameters>
+    </tariff>
+</tariffs>

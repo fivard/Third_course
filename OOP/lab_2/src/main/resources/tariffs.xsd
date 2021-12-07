@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<!-- definition of simple elements -->
+<xs:element name="name" type="xs:string"/>
+<xs:element name="operatorName" type="xs:string"/>
+<xs:element name="payroll" type="xs:positiveInteger"/>
+<xs:element name="SMSPrice" type="xs:positiveInteger"/>
+<xs:element name="inNetwork" type="xs:positiveInteger"/>
+<xs:element name="outNetwork" type="xs:positiveInteger" />
+<xs:element name="stationary" type="xs:positiveInteger"/>
+<xs:element name="tariffication" type="xs:positiveInteger"/>
+<xs:element name="connectionCost" type="xs:positiveInteger"/>
+
+<!-- definition of attributes -->
+<xs:attribute name="id" type="xs:string"/>
+
+<!-- definition of complex elements -->
+<xs:element name="callPrices">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element ref="inNetwork"/>
+            <xs:element ref="outNetwork"/>
+            <xs:element ref="stationary"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:element>
+
+
+<xs:element name="parameters">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element ref="tariffication"/>
+            <xs:element ref="connectionCost"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:element>
+
+
+<xs:element name="tariffs">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="tariff">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="name" />
+                        <xs:element ref="operatorName"/>
+                        <xs:element ref="payroll"/>
+                        <xs:element ref="SMSPrice" />
+                        <xs:element ref="callPrices"/>
+                        <xs:element ref="parameters"/>
+                    </xs:sequence>
+                    <xs:attribute ref="id" use="required"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+</xs:element>
+
+</xs:schema>
