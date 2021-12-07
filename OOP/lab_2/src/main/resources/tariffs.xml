@@ -1,34 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tariffs>
-    <tariff id="1">
-        <name>1</name>
-        <operatorName>1</operatorName>
-        <payroll>1</payroll>
-        <SMSPrice>1</SMSPrice>
+<Tariffs>
+    <Tariff>
+        <id>1</id>
+        <name>Month</name>
+        <operatorName>Life</operatorName>
+        <payroll>100</payroll>
+        <SMSPrice>50</SMSPrice>
         <callPrices>
-            <inNetwork>1</inNetwork>
-            <outNetwork>1</outNetwork>
-            <stationary>1</stationary>
+            <inNetwork>5</inNetwork>
+            <outNetwork>10</outNetwork>
+            <stationary>100</stationary>
         </callPrices>
         <parameters>
-            <tariffication>1</tariffication>
-            <connectionCost>1</connectionCost>
+            <tariffication>Minute</tariffication>
+            <connectionCost>2</connectionCost>
         </parameters>
-    </tariff>
+    </Tariff>
 
-    <tariff id="2">
-        <name>1</name>
-        <operatorName>1</operatorName>
-        <payroll>1</payroll>
-        <SMSPrice>1</SMSPrice>
+    <Tariff>
+        <id>2</id>
+        <name>Day</name>
+        <operatorName>Vodafone</operatorName>
+        <payroll>150</payroll>
+        <SMSPrice>40</SMSPrice>
         <callPrices>
-            <inNetwork>1</inNetwork>
-            <outNetwork>1</outNetwork>
-            <stationary>1</stationary>
+            <inNetwork>3</inNetwork>
+            <outNetwork>5</outNetwork>
+            <stationary>10</stationary>
         </callPrices>
         <parameters>
-            <tariffication>1</tariffication>
-            <connectionCost>1</connectionCost>
+            <tariffication>Sec</tariffication>
+            <connectionCost>2</connectionCost>
         </parameters>
-    </tariff>
-</tariffs>
+    </Tariff>
+</Tariffs>
