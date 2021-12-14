@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tariffs>
+    <Tariff>
+        <id>1</id>
+        <name>Month</name>
+        <operatorName>Life</operatorName>
+        <payroll>100</payroll>
+        <SMSPrice>50</SMSPrice>
+        <callPrices>
+            <inNetwork>5</inNetwork>
+            <outNetwork>10</outNetwork>
+            <stationary>100</stationary>
+        </callPrices>
+        <parameters>
+            <tariffication>Minute</tariffication>
+            <connectionCost>2</connectionCost>
+        </parameters>
+    </Tariff>
+
+    <Tariff>
+        <id>2</id>
+        <name>Day</name>
+        <operatorName>Vodafone</operatorName>
+        <payroll>150</payroll>
+        <SMSPrice>40</SMSPrice>
+        <callPrices>
+            <inNetwork>3</inNetwork>
+            <outNetwork>5</outNetwork>
+            <stationary>10</stationary>
+        </callPrices>
+        <parameters>
+            <tariffication>Sec</tariffication>
+            <connectionCost>2</connectionCost>
+        </parameters>
+    </Tariff>
+</Tariffs>
