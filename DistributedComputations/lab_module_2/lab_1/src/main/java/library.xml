@@ -4,9 +4,9 @@
         <Book authorId="author2" id="id2" name="Hello" releaseYear="1867"/>
         <Book authorId="author2" id="id5" name="Vasya" releaseYear="1987"/>
     </Author>
-    <Author id="author1" name="Kocubynskyi">
+    <Autor id="author1" name="Kocubynskyi">
         <Book authorId="author1" id="id1" name="Hey" releaseYear="1789"/>
-    </Author>
+    </Autor>
     <Author id="author0" name="Franko">
         <Book authorId="author0" id="id0" name="aloha" releaseYear="1987"/>
     </Author>

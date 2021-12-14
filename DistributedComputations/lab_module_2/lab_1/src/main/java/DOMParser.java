@@ -53,7 +53,6 @@ public class DOMParser {
             author.setAuthorId(n.getAttribute("id"));
             author.setName(n.getAttribute("name"));
             library.addAuthor(author);
-
         }
 
         nodes = doc.getElementsByTagName("Book");
