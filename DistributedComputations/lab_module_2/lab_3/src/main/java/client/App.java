@@ -39,7 +39,7 @@ public class App extends JFrame {
     private static JTextField textBookYear = new JTextField(30);
 
     private App() {
-        super("Video Shop");
+        super("Library");
         frame = this;
         frame.setPreferredSize(new Dimension(400, 500));
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);

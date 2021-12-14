@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class CustomConnection {
     private static Connection connection = null;
 
-    private static final String URL = "jdbc:postgresql://localhost:5432/videoshop";
+    private static final String URL = "jdbc:postgresql://localhost:5432/library";
     private static final String USER = "postgres";
     private static final String PASSWORD = "postgres";
 
