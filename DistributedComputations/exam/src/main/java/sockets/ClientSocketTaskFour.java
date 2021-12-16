@@ -10,7 +10,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ClientSocketTaskOne {
+public class ClientSocketTaskFour {
 
     private static int port = 9876;
 

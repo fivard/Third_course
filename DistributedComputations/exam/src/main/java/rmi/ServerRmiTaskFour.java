@@ -17,7 +17,7 @@ interface RMIServer extends Remote {
     List<Abiturient> displayNHighestSum(int count);
 }
 
-public class ServerRmiTaskTwo {
+public class ServerRmiTaskFour {
     public static void main(String[] args) throws RemoteException {
         Registry registry = LocateRegistry.createRegistry(123);
         RMIServer service = new Service();

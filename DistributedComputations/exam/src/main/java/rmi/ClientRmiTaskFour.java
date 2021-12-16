@@ -6,7 +6,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.Scanner;
 
-public class ClientRmiTaskTwo {
+public class ClientRmiTaskFour {
     public static void main(String[] args) throws RemoteException, NotBoundException, MalformedURLException {
         int choice = 1000;
         int x, y;
