@@ -1,11 +1,11 @@
 from ray.rllib.agents.ppo import PPOTrainer
-from mountain_car import MountainCarEnv
-from train import HILLS_FACTOR
+from mountain_car import MountainCarEnv, HILLS_FACTOR
 
 config = {
     "framework": "torch",
     "env_config": {"hills_factor": HILLS_FACTOR}
 }
+
 trainer = PPOTrainer(env=MountainCarEnv, config=config)
 
 
@@ -19,7 +19,8 @@ def run_human_evaluation():
         obs, reward, done, info = env.step(action)
         env.render()
         episode_reward += reward
+    print(episode_reward)
 
-
-trainer.restore('checkpoints/checkpoint_000100/checkpoint-70')
+# trainer.restore('checkpoints/checkpoint_000185/checkpoint-185')
+trainer.restore('checkpoints/checkpoint_000230/checkpoint-230')
 run_human_evaluation()

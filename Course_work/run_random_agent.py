@@ -1,13 +1,14 @@
-from mountain_car import MountainCarEnv
-env = MountainCarEnv(config={'hills_factor': 3})
-observation, info = env.reset()
+from mountain_car import MountainCarEnv, HILLS_FACTOR
 
-for _ in range(10000):
+env = MountainCarEnv(config={'hills_factor': HILLS_FACTOR})
+state = env.reset()
+done = False
+episode_reward = 0
+
+while not done:
     observation, reward, done, info = env.step(env.action_space.sample())
-
-    env.render(mode="human")
-    if done:
-        print("DONE")
-        observation, info = env.reset()
+    env.render()
+    episode_reward += reward
+print(episode_reward)
 
 env.close()
