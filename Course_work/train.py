@@ -1,13 +1,17 @@
 from ray.rllib.agents.ppo import PPOTrainer
 from mountain_car import MountainCarEnv
+
+HILLS_FACTOR = 10
+
 config = {
     "framework": "torch",
+    "env_config": {"hills_factor": HILLS_FACTOR}
 }
 trainer = PPOTrainer(env=MountainCarEnv, config=config)
 
 
 def run_human_evaluation():
-    env = MountainCarEnv()
+    env = MountainCarEnv(config={"hills_factor": HILLS_FACTOR})
     episode_reward = 0
     done = False
     obs = env.reset()

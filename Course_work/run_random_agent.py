@@ -1,6 +1,5 @@
-import gym
 from mountain_car import MountainCarEnv
-env = MountainCarEnv(config={'hills_factor': 7})
+env = MountainCarEnv(config={'hills_factor': 3})
 observation, info = env.reset()
 
 for _ in range(10000):
