@@ -1,4 +1,5 @@
 import math
+from matplotlib import pyplot as plt
 
 
 class Point:
@@ -10,6 +11,9 @@ class Point:
 
     def __repr__(self):
         return "(" + str(self.x) + "; " + str(self.y) + ")"
+
+
+point_to_locate = Point(15, 10)
 
 
 class Edge:
@@ -24,26 +28,26 @@ class Edge:
         return str(edges.index(self))
 
 
-def read_points(file_name):
-    points = []
-    input_array = open(file_name).read().split()
+def read_data(file_name_vertices, file_name_edges):
+    vertices = []
+    edges = []
+    edges_input_array = open(file_name_edges).read().split()
+    vertices_input_array = open(file_name_vertices).read().split()
 
     i = 0
-    while i < len(input_array):
-        points.append(Point(int(input_array[i]), int(input_array[i + 1])))
+    while i < len(vertices_input_array):
+        x = int(vertices_input_array[i])
+        y = int(vertices_input_array[i + 1])
+        vertices.append(Point(x, y))
         i += 2
-    return points
-
-
-def read_edges(file_name):
-    edgs = []
-    input_array = open(file_name).read().split()
 
     i = 0
-    while i < len(input_array):
-        edgs.append(Edge(vertices[int(input_array[i])], vertices[int(input_array[i + 1])]))
+    while i < len(edges_input_array):
+        start_point = vertices[int(edges_input_array[i])]
+        end_point = vertices[int(edges_input_array[i + 1])]
+        edges.append(Edge(start_point, end_point))
         i += 2
-    return edgs
+    return vertices, edges
 
 
 def sum_weight(array):
@@ -83,7 +87,7 @@ def create_chain(chain_num):
 
 
 def find(point):
-    for p in range(0, num_chains, 1):
+    for p in range(0, num_chains):
         for e in chains[p]:
             if e.start.y < point.y < e.end.y:
                 point_vector = Point(point.x - e.start.x, point.y - e.start.y)
@@ -93,52 +97,77 @@ def find(point):
     return "Point is not inside graph"
 
 
-vertices = read_points("vertices.txt")
-edges = read_edges("edges.txt")
+def plot():
+    ax = plt.axes()
 
-vertices = sorted(vertices, key=lambda point: point.y)
+    i = 0
+    for vertex in vertices:
+        plt.annotate(i, (vertex.x, vertex.y), fontsize=20)
+        plt.plot(vertex.x, vertex.y, marker="o", markersize=4, markerfacecolor="green")
+        i += 1
+    for edge in edges:
+        ax.arrow(edge.start.x, edge.start.y,
+                 edge.end.x - edge.start.x, edge.end.y - edge.start.y, head_width=0.5, head_length=1)
+        plt.annotate(edge.weight,
+                     xy=((edge.end.x + edge.start.x) / 2, (edge.end.y + edge.start.y) / 2),
+                     xytext=(10, -10),
+                     textcoords='offset points',
+                     fontsize=14)
 
-edges_in = []
-edges_out = []
+    plt.plot(point_to_locate.x, point_to_locate.y, marker="o", markersize=8, markerfacecolor="red")
+    plt.show()
 
-for v in vertices:
-    edges_in.insert(vertices.index(v), [])
-    edges_out.insert(vertices.index(v), [])
 
-for e in edges:
-    from_idx = vertices.index(e.start)
-    to_idx = vertices.index(e.end)
-    edges_out[from_idx].append(e)
-    edges_in[to_idx].append(e)
-    e.weight = 1
+if __name__ == "__main__":
+    vertices, edges = read_data("vertices.txt", "edges.txt")
+    vertices = sorted(vertices, key=lambda point: point.y)
 
-n = len(vertices)
+    edges_in = []
+    edges_out = []
 
-for i in range(1, n - 1):
-    vertices[i].w_in = sum_weight(edges_in[i])
-    vertices[i].w_out = sum_weight(edges_out[i])
-    edges_out[i] = sort_edges(edges_out[i])
-    if vertices[i].w_in > vertices[i].w_out:
-        edges_out[i][0].weight = vertices[i].w_in - vertices[i].w_out + 1
+    for vertex in vertices:
+        edges_in.insert(vertices.index(vertex), [])
+        edges_out.insert(vertices.index(vertex), [])
 
-for i in range(n - 1, 1, -1):
-    vertices[i].w_in = sum_weight(edges_in[i])
-    vertices[i].w_out = sum_weight(edges_out[i])
-    edges_in[i] = sort_edges(edges_in[i])
-    if vertices[i].w_out > vertices[i].w_in:
-        edges_in[i][0].weight = vertices[i].w_out - vertices[i].w_in + edges_in[i][0].weight
+    for edge in edges:
+        from_idx = vertices.index(edge.start)
+        to_idx = vertices.index(edge.end)
+        edges_out[from_idx].append(edge)
+        edges_in[to_idx].append(edge)
+        edge.weight = 1
 
-chains = []
-num_chains = sum_weight(edges_out[0])
+    n = len(vertices)
 
-ordered_edges_out = []
-for v in edges_out:
-    v = sort_edges(v)
-    ordered_edges_out.append(v)
+    for i in range(1, n - 1):
+        vertices[i].w_in = sum_weight(edges_in[i])
+        vertices[i].w_out = sum_weight(edges_out[i])
+        edges_out[i] = sort_edges(edges_out[i])
+        if vertices[i].w_in > vertices[i].w_out:
+            edges_out[i][0].weight = vertices[i].w_in - vertices[i].w_out + 1
 
-for j in range(num_chains):
-    chains.insert(j, [])
-    create_chain(j)
+    for i in range(n - 1, 1, -1):
+        vertices[i].w_in = sum_weight(edges_in[i])
+        vertices[i].w_out = sum_weight(edges_out[i])
+        edges_in[i] = sort_edges(edges_in[i])
+        if vertices[i].w_out > vertices[i].w_in:
+            edges_in[i][0].weight = vertices[i].w_out - vertices[i].w_in + edges_in[i][0].weight
 
-print(chains)
-print(find(Point(-2, -2)))
+    plot()
+    chains = []
+    num_chains = sum_weight(edges_out[0])
+
+    ordered_edges_out = []
+    for v in edges_out:
+        v = sort_edges(v)
+        ordered_edges_out.append(v)
+
+    for j in range(num_chains):
+        chains.insert(j, [])
+        create_chain(j)
+
+    for i, chain in enumerate(chains):
+        print(f"Chain {i}: {vertices.index(chain[0].start)}", end="")
+        for edge in chain:
+            print(f" {vertices.index(edge.end)}", end="")
+        print()
+    print(find(point_to_locate))
