@@ -7,12 +7,12 @@ import gym
 from gym import spaces
 
 HILLS_FACTOR = 10
-START_POSITION = -0.75
+START_POSITION = -0.8
 
 
 class MountainCarEnv(gym.Env):
 
-    metadata = {"render.modes": ["human", "rgb_array"], "video.frames_per_second": 30}
+    metadata = {"render.modes": ["human", "rgb_array"], "render.render_fps": 2}
 
     def __init__(self, config=None):
         config = config or {}
@@ -42,6 +42,7 @@ class MountainCarEnv(gym.Env):
 
         position, velocity = self.state
         new_velocity = self._calculate_new_velocity(position, velocity, action)
+        print(new_velocity)
         new_position = self._calculate_new_position(position, new_velocity)
 
         if new_position == self.min_position and new_velocity < 0:

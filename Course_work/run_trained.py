@@ -21,6 +21,5 @@ def run_human_evaluation():
         episode_reward += reward
     print(episode_reward)
 
-# trainer.restore('checkpoints/checkpoint_000185/checkpoint-185')
-trainer.restore('checkpoints/checkpoint_000230/checkpoint-230')
+trainer.restore('checkpoints/checkpoint_000185/checkpoint-185')
 run_human_evaluation()
