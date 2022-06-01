@@ -1,4 +1,3 @@
-// a point in 2D, sorted by y-coordinate
 public class Point implements Comparable <Point>{
 
     double x;

@@ -1,15 +1,12 @@
-// represents the beach line
-// can either be a site that is the center of a parabola
-// or can be a vertex that bisects two sites
 public class Parabola {
 
     public static int IS_FOCUS = 0;
     public static int IS_VERTEX = 1;
 
     int type;
-    Point point; // if is focus
-    Edge edge; // if is vertex
-    Event event; // a parabola with a focus can disappear in a circle event
+    Point point;
+    Edge edge;
+    Event event;
 
     Parabola parent;
     Parabola child_left;

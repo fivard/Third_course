@@ -18,48 +18,66 @@ public class Voronoy {
 
     public Voronoy (List <Point> sites) {
         this.sites = sites;
-        edges = new ArrayList<Edge>();
+        this.edges = new ArrayList<>();
         generateVoronoi();
+    }
+
+    public static void main(String[] args) {
+        int N = 30;
+
+        ArrayList<Point> points = new ArrayList<>();
+
+        Random gen = new Random();
+
+        for (int i = 0; i < N; i++){
+            double x = gen.nextDouble();
+            double y = gen.nextDouble();
+            points.add(new Point(x, y));
+        }
+
+        Voronoy diagram = new Voronoy(points);
+
+        // draw results
+        StdDraw.setPenRadius(.01);
+        for (Point p: points) {
+            StdDraw.point(p.x, p.y);
+        }
+        StdDraw.setPenRadius(.002);
+        for (Edge e: diagram.edges) {
+            StdDraw.line(e.start.x, e.start.y, e.end.x, e.end.y);
+        }
     }
 
     private void generateVoronoi() {
 
-        events = new PriorityQueue <Event>();
-        for (Point p : sites) {
-            events.add(new Event(p, Event.SITE_EVENT));
+        events = new PriorityQueue <>();
+        for (Point point : sites) {
+            events.add(new Event(point, Event.SITE_EVENT));
         }
 
-        // process events (sweep line)
-        int count = 0;
         while (!events.isEmpty()) {
-            //System.out.println();
-            Event e = events.remove();
-            ycurr = e.p.y;
-            count++;
-            if (e.type == Event.SITE_EVENT) {
-                //System.out.println(count + ". SITE_EVENT " + e.p);
-                handleSite(e.p);
+            Event event = events.remove();
+            ycurr = event.point.y;
+            if (event.type == Event.SITE_EVENT) {
+                handleSite(event.point);
             }
             else {
-                //System.out.println(count + ". CIRCLE_EVENT " + e.p);
-                handleCircle(e);
+                handleCircle(event);
             }
         }
 
         ycurr = width+height;
 
-        endEdges(root); // close off any dangling edges
+        endEdges(root);
 
-        // get rid of those crazy inifinte lines
-        for (Edge e: edges){
-            if (e.neighbor != null) {
-                e.start = e.neighbor.end;
-                e.neighbor = null;
+        for (Edge edge: edges){
+            if (edge.neighbor != null) {
+                edge.start = edge.neighbor.end;
+                edge.neighbor = null;
             }
         }
     }
 
-    // end all unfinished edges
     private void endEdges(Parabola p) {
         if (p.type == Parabola.IS_FOCUS) {
             p = null;
@@ -76,46 +94,40 @@ public class Voronoy {
         p = null;
     }
 
-    // processes site event
-    private void handleSite(Point p) {
-        // base case
+    private void handleSite(Point point) {
         if (root == null) {
-            root = new Parabola(p);
+            root = new Parabola(point);
             return;
         }
 
-        // find parabola on beach line right above p
-        Parabola par = getParabolaByX(p.x);
-        if (par.event != null) {
-            events.remove(par.event);
-            par.event = null;
+        Parabola parabola = getParabolaByX(point.x);
+        if (parabola.event != null) {
+            events.remove(parabola.event);
+            parabola.event = null;
         }
 
-        // create new dangling edge; bisects parabola focus and p
-        Point start = new Point(p.x, getY(par.point, p.x));
-        Edge el = new Edge(start, par.point, p);
-        Edge er = new Edge(start, p, par.point);
-        el.neighbor = er;
-        er.neighbor = el;
-        par.edge = el;
-        par.type = Parabola.IS_VERTEX;
+        Point start = new Point(point.x, getY(parabola.point, point.x));
+        Edge edge_left = new Edge(start, parabola.point, point);
+        Edge edge_right = new Edge(start, point, parabola.point);
+        edge_left.neighbor = edge_right;
+        edge_right.neighbor = edge_left;
+        parabola.edge = edge_left;
+        parabola.type = Parabola.IS_VERTEX;
 
-        // replace original parabola par with p0, p1, p2
-        Parabola p0 = new Parabola (par.point);
-        Parabola p1 = new Parabola (p);
-        Parabola p2 = new Parabola (par.point);
+        Parabola p0 = new Parabola (parabola.point);
+        Parabola p1 = new Parabola (point);
+        Parabola p2 = new Parabola (parabola.point);
 
-        par.setLeftChild(p0);
-        par.setRightChild(new Parabola());
-        par.child_right.edge = er;
-        par.child_right.setLeftChild(p1);
-        par.child_right.setRightChild(p2);
+        parabola.setLeftChild(p0);
+        parabola.setRightChild(new Parabola());
+        parabola.child_right.edge = edge_right;
+        parabola.child_right.setLeftChild(p1);
+        parabola.child_right.setRightChild(p2);
 
         checkCircleEvent(p0);
         checkCircleEvent(p2);
     }
 
-    // process circle event
     private void handleCircle(Event e) {
 
         // find p0, p1, p2 that generate this event from left to right
@@ -135,7 +147,7 @@ public class Voronoy {
             p2.event = null;
         }
 
-        Point p = new Point(e.p.x, getY(p1.point, e.p.x)); // new vertex
+        Point p = new Point(e.point.x, getY(p1.point, e.point.x)); // new vertex
 
         // end edges!
         xl.edge.end = p;
@@ -214,7 +226,6 @@ public class Voronoy {
         else return  0;
     }
 
-    // returns intersection of the lines of with vectors a and b
     private Point getEdgeIntersection(Edge a, Edge b) {
 
         if (b.slope == a.slope && b.yint != a.yint) return null;
@@ -225,7 +236,6 @@ public class Voronoy {
         return new Point(x, y);
     }
 
-    // returns current x-coordinate of an unfinished edge
     private double getXofEdge (Parabola par) {
         //find intersection of two parabolas
 
@@ -278,36 +288,7 @@ public class Voronoy {
         double dp = 2*(p.y - ycurr);
         double a1 = 1/dp;
         double b1 = -2*p.x/dp;
-        double c1 = (p.x*p.x + p.y*p.y - ycurr*ycurr)/dp;
+        double c1 = (p.x * p.x + p.y*p.y - ycurr*ycurr)/dp;
         return (a1*x*x + b1*x + c1);
-    }
-
-    // takes one command line arguement N
-    // draws Voronoi diagram of N randomly generated sites
-    public static void main(String[] args) {
-        int N = 30;
-
-        ArrayList<Point> points = new ArrayList<Point>();
-
-        Random gen = new Random();
-
-        for (int i = 0; i < N; i++){
-            double x = gen.nextDouble();
-            double y = gen.nextDouble();
-            points.add(new Point(x, y));
-        }
-
-        Voronoy diagram = new Voronoy (points);
-
-        // draw results
-        StdDraw.setPenRadius(.01);
-        for (Point p: points) {
-            StdDraw.point(p.x, p.y);
-        }
-        StdDraw.setPenRadius(.002);
-        for (Edge e: diagram.edges) {
-            StdDraw.line(e.start.x, e.start.y, e.end.x, e.end.y);
-        }
-
     }
 }
