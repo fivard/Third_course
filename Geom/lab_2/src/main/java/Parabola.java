@@ -40,17 +40,14 @@ public class Parabola {
         }
     }
 
-    // returns the closest left site (focus of parabola)
     public static Parabola getLeft(Parabola p) {
         return getLeftChild(getLeftParent(p));
     }
 
-    // returns closest right site (focus of parabola)
     public static Parabola getRight(Parabola p) {
         return getRightChild(getRightParent(p));
     }
 
-    // returns the closest parent on the left
     public static Parabola getLeftParent(Parabola p) {
         Parabola parent = p.parent;
         if (parent == null) return null;
@@ -63,7 +60,6 @@ public class Parabola {
         return parent;
     }
 
-    // returns the closest parent on the right
     public static Parabola getRightParent(Parabola p) {
         Parabola parent = p.parent;
         if (parent == null) return null;
@@ -76,7 +72,6 @@ public class Parabola {
         return parent;
     }
 
-    // returns closest site (focus of another parabola) to the left
     public static Parabola getLeftChild(Parabola p) {
         if (p == null) return null;
         Parabola child = p.child_left;
@@ -84,7 +79,6 @@ public class Parabola {
         return child;
     }
 
-    // returns closest site (focus of another parabola) to the right
     public static Parabola getRightChild(Parabola p) {
         if (p == null) return null;
         Parabola child = p.child_right;

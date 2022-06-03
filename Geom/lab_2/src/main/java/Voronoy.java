@@ -5,16 +5,15 @@ import java.util.Random;
 
 public class Voronoy {
 
-    private List<Point> sites; //points of Voronoi diagram
-    private List <Edge> edges; // edges on Voronoi diagram
-    private PriorityQueue<Event> events; // priority queue represents sweep line
-    private Parabola root; // binary search tree represents beach line
+    private List<Point> sites;
+    private List <Edge> edges;
+    private PriorityQueue<Event> events;
+    private Parabola root;
 
-    // size of StdDraw window
     private double width = 1;
     private double height = 1;
 
-    private double ycurr; // current y-coord of sweep line
+    private double ycurr;
 
     public Voronoy (List <Point> sites) {
         this.sites = sites;
@@ -60,6 +59,7 @@ public class Voronoy {
             ycurr = event.point.y;
             if (event.type == Event.SITE_EVENT) {
                 handleSite(event.point);
+                System.out.println(event.point.x + " " + event.point.y);
             }
             else {
                 handleCircle(event);
@@ -129,15 +129,14 @@ public class Voronoy {
     }
 
     private void handleCircle(Event e) {
-
-        // find p0, p1, p2 that generate this event from left to right
         Parabola p1 = e.arc;
         Parabola xl = Parabola.getLeftParent(p1);
         Parabola xr = Parabola.getRightParent(p1);
         Parabola p0 = Parabola.getLeftChild(xl);
         Parabola p2 = Parabola.getRightChild(xr);
+        if (xr == null)
+            System.out.println("NULL");
 
-        // remove associated events since the points will be altered
         if (p0.event != null) {
             events.remove(p0.event);
             p0.event = null;
@@ -149,13 +148,11 @@ public class Voronoy {
 
         Point p = new Point(e.point.x, getY(p1.point, e.point.x)); // new vertex
 
-        // end edges!
         xl.edge.end = p;
         xr.edge.end = p;
         edges.add(xl.edge);
         edges.add(xr.edge);
 
-        // start new bisector (edge) from this vertex on which ever original edge is higher in tree
         Parabola higher = new Parabola();
         Parabola par = p1;
         while (par != root) {
@@ -165,7 +162,6 @@ public class Voronoy {
         }
         higher.edge = new Edge(p, p0.point, p2.point);
 
-        // delete p1 and parent (boundary edge) from beach line
         Parabola gparent = p1.parent.parent;
         if (p1.parent.child_left == p1) {
             if(gparent.child_left  == p1.parent) gparent.setLeftChild(p1.parent.child_right);
@@ -184,7 +180,6 @@ public class Voronoy {
         checkCircleEvent(p2);
     }
 
-    // adds circle event if foci a, b, c lie on the same circle
     private void checkCircleEvent(Parabola b) {
 
         Parabola lp = Parabola.getLeftParent(b);
@@ -199,20 +194,16 @@ public class Voronoy {
 
         if (ccw(a.point,b.point,c.point) != 1) return;
 
-        // edges will intersect to form a vertex for a circle event
         Point start = getEdgeIntersection(lp.edge, rp.edge);
         if (start == null) return;
 
-        // compute radius
         double dx = b.point.x - start.x;
         double dy = b.point.y - start.y;
         double d = Math.sqrt((dx*dx) + (dy*dy));
-        if (start.y + d < ycurr) return; // must be after sweep line
+        if (start.y + d < ycurr) return;
 
         Point ep = new Point(start.x, start.y + d);
-        //System.out.println("added circle event "+ ep);
 
-        // add circle event
         Event e = new Event (ep, Event.CIRCLE_EVENT);
         e.arc = b;
         b.event = e;
@@ -237,8 +228,6 @@ public class Voronoy {
     }
 
     private double getXofEdge (Parabola par) {
-        //find intersection of two parabolas
-
         Parabola left = Parabola.getLeftChild(par);
         Parabola right = Parabola.getRightChild(par);
 
@@ -270,7 +259,6 @@ public class Voronoy {
         return ry;
     }
 
-    // returns parabola above this x coordinate in the beach line
     private Parabola getParabolaByX (double xx) {
         Parabola par = root;
         double x = 0;
@@ -282,9 +270,7 @@ public class Voronoy {
         return par;
     }
 
-    // find corresponding y-coordinate to x on parabola with focus p
     private double getY(Point p, double x) {
-        // determine equation for parabola around focus p
         double dp = 2*(p.y - ycurr);
         double a1 = 1/dp;
         double b1 = -2*p.x/dp;

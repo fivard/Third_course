@@ -4,9 +4,9 @@ public class Edge {
     Point end;
     Point site_left;
     Point site_right;
-    Point direction; // edge is really a vector normal to left and right points
+    Point direction;
 
-    Edge neighbor; // the same edge, but pointing in the opposite direction
+    Edge neighbor;
 
     double slope;
     double yint;
