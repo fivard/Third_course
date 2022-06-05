@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet author="postgres" id="1">
+        <createTable tableName="product">
+            <column name="id" autoIncrement="true" type="int">
+                <constraints primaryKey="true" nullable="false" unique="true" />
+            </column>
+
+            <column name="name" type="varchar(30)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+
+            <column name="price" type="int">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="description" type="varchar(30)" />
+
+            <column name="product_type_id" type="int">
+                <constraints nullable="false" foreignKeyName="fk_" />
+            </column>
+        </createTable>
+
+        <createTable tableName="product_type">
+            <column name="id" autoIncrement="true" type="int">
+                <constraints primaryKey="true" nullable="false" unique="true" />
+            </column>
+
+            <column name="name" type="varchar(30)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="description" type="varchar(30)" />
+        </createTable>
+
+        <sql>CREATE TYPE user_type AS ENUM('CLIENT', 'ADMINISTRATOR')</sql>
+
+        <createTable tableName="users">
+            <column name="id" autoIncrement="true" type="int">
+                <constraints primaryKey="true" nullable="false" unique="true" />
+            </column>
+
+            <column name="name" type="varchar(30)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="password" type="varchar(70)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="type" type="user_type">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="blocked" type="bool">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <createTable tableName="shopping_cart">
+            <column name="id" autoIncrement="true" type="int">
+                <constraints primaryKey="true" nullable="false" unique="true" />
+            </column>
+
+            <column name="user_id" type="int">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="product_id" type="int">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="quantity" type="int">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseColumnNames="product_type_id"
+                baseTableName="product"
+                constraintName="fk_product_product_type"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedColumnNames="id"
+                referencedTableName="product_type"/>
+
+        <addForeignKeyConstraint
+                baseColumnNames="user_id"
+                baseTableName="shopping_cart"
+                constraintName="fk_user_shopping_cart"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedColumnNames="id"
+                referencedTableName="users"/>
+
+        <addForeignKeyConstraint
+                baseColumnNames="product_id"
+                baseTableName="shopping_cart"
+                constraintName="fk_product_shopping_cart"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedColumnNames="id"
+                referencedTableName="product"/>
+
+        <rollback>
+            <sql>DROP TYPE user_type CASCADE</sql>
+            <dropTable tableName="product" cascadeConstraints="true"/>
+            <dropTable tableName="product_type" cascadeConstraints="true"/>
+            <dropTable tableName="users" cascadeConstraints="true"/>
+            <dropTable tableName="quantity" cascadeConstraints="true"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

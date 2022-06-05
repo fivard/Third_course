@@ -13,7 +13,7 @@ class Point:
         return "(" + str(self.x) + "; " + str(self.y) + ")"
 
 
-point_to_locate = Point(15, 10)
+point_to_locate = Point(-2, -2)
 
 
 class Edge:
@@ -107,7 +107,7 @@ def plot():
         i += 1
     for edge in edges:
         ax.arrow(edge.start.x, edge.start.y,
-                 edge.end.x - edge.start.x, edge.end.y - edge.start.y, head_width=0.5, head_length=1)
+                 edge.end.x - edge.start.x, edge.end.y - edge.start.y, head_width=0, head_length=0)
         plt.annotate(edge.weight,
                      xy=((edge.end.x + edge.start.x) / 2, (edge.end.y + edge.start.y) / 2),
                      xytext=(10, -10),

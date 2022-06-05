@@ -59,7 +59,6 @@ public class Voronoy {
             ycurr = event.point.y;
             if (event.type == Event.SITE_EVENT) {
                 handleSite(event.point);
-                System.out.println(event.point.x + " " + event.point.y);
             }
             else {
                 handleCircle(event);
