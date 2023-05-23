@@ -1,6 +1,8 @@
-from mountain_car import MountainCarEnv, HILLS_FACTOR
+import time
 
-env = MountainCarEnv(config={'hills_factor': HILLS_FACTOR})
+from mountain_car_spline import MountainCarEnvSpline
+
+env = MountainCarEnvSpline(config={'count_vertexes': 20})
 state = env.reset()
 done = False
 episode_reward = 0
@@ -9,6 +11,7 @@ while not done:
     observation, reward, done, info = env.step(env.action_space.sample())
     env.render()
     episode_reward += reward
-print(episode_reward)
+    time.sleep(1)
+print(f"{episode_reward=}")
 
 env.close()

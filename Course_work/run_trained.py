@@ -18,4 +18,4 @@ while not done:
     obs, reward, done, info = env.step(action)
     env.render()
     episode_reward += reward
-print(episode_reward)
+print(f"{episode_reward=}")

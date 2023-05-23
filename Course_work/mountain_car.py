@@ -6,7 +6,7 @@ import numpy as np
 import gym
 from gym import spaces
 
-HILLS_FACTOR = 2
+HILLS_FACTOR = 7
 START_POSITION = -0.8
 
 
