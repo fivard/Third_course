@@ -1,18 +1,18 @@
 from ray.rllib.agents.ppo import PPOTrainer
-from mountain_car import MountainCarEnv, HILLS_FACTOR
+from mountain_car_spline import MountainCarEnvSpline
 
 config = {
     "framework": "torch",
-    "env_config": {"hills_factor": HILLS_FACTOR}
+    "env_config": {"count_vertexes": 20}
 }
-trainer = PPOTrainer(env=MountainCarEnv, config=config)
+trainer = PPOTrainer(env=MountainCarEnvSpline, config=config)
 
 for i in range(100):
     info = trainer.train()
-    path = trainer.save(f'checkpoints/')
+    path = trainer.save(f'checkpoints_spline_new_reward/')
     print(i, info['episode_reward_mean'], path, info)
 
-env = MountainCarEnv(config={"hills_factor": HILLS_FACTOR})
+env = MountainCarEnvSpline(config={"count_vertexes": 20})
 episode_reward = 0
 done = False
 obs = env.reset()
