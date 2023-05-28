@@ -110,8 +110,6 @@ class MountainCarEnvSpline(gym.Env):
         return {'vision': self._get_ray_collision(), 'velocity': [self.velocity]}
 
     def _calculate_reward(self):
-        if self.position == self.min_position:
-            return -10
         if self.position > self.goal_position:
             return 100
         return -1

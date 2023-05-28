@@ -19,6 +19,6 @@ while not done:
     action = trainer.compute_single_action(obs)
     obs, reward, done, info = env.step(action)
     env.render()
-    time.sleep(0.05)
+    time.sleep(0.1)
     episode_reward += reward
 print(f"{episode_reward=}")
